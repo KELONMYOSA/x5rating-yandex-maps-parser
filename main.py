@@ -1,7 +1,7 @@
 from places_id_collector import collect_places_id
 from reviews_and_data_collector import collect_reviews_and_data
 
-region_ids = ["2"]
+region_ids = ["1", "2"]
 categories = ["grocery", "supermarket", "food_hypermarket"]
 
 for region_id in region_ids:

@@ -4,6 +4,7 @@ import os
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
+from dao import insert_review_data, insert_place_data
 from places_id_collector import get_file_dir
 from utils import execute_captcha
 
@@ -78,6 +79,7 @@ def collect_reviews_and_data(region_id, category):
                 try:
                     reviews_data = response.json()["data"]
                     save_json_place_reviews(reviews_data, current_place_id)
+                    insert_review_data(reviews_data)
                 except:
                     None
 
@@ -89,7 +91,6 @@ def collect_reviews_and_data(region_id, category):
             url = f"https://yandex.ru/maps/org/-/{place_id}/reviews/"
             current_place_id = place_id
 
-            # connect_to_tor()
             browser = p.chromium.launch(headless=False)
             page = browser.new_page()
 
@@ -102,12 +103,14 @@ def collect_reviews_and_data(region_id, category):
 
             place_data = json.loads(BeautifulSoup(page.content(), "html.parser").find("script", class_="state-view").text)["stack"][0]["results"]["items"][0]
             save_json_place_data(place_data, place_id)
+            insert_place_data(place_data)
 
             try:
                 page.locator("div[class=business-reviews-card-view__reviews-container]").wait_for(timeout=2000)
 
                 start_reviews = json.loads(BeautifulSoup(page.content(), "html.parser").find("script", class_="state-view").text)["stack"][0]["results"]["items"][0]["reviewResults"]
                 save_json_place_reviews(start_reviews, place_id)
+                insert_review_data(start_reviews)
 
                 while True:
                     review_cards = page.locator("div[class=business-reviews-card-view__review]")
