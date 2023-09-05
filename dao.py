@@ -54,7 +54,6 @@ def insert_place_data(place_data):
 
     aspects = []
     if 'aspects' in list(place_data.keys()):
-        aspects = []
         for aspects_data in place_data['aspects']:
             aspects_name = ""
             if 'name' in list(aspects_data.keys()):
@@ -68,13 +67,16 @@ def insert_place_data(place_data):
                 'negative': str(aspects_data['negative']),
             })
 
+    working_time = ""
+    if 'workingTimeText' in list(place_data.keys()):
+        working_time = place_data['workingTimeText']
+
     data = [place_data['id'],
             place_data['title'],
             place_data['coordinates'],
             place_data['compositeAddress'],
             place_data['ratingData'],
-            place_data['workingTimeText'],
-            metro, stops, chain, features, aspects]
+            working_time, metro, stops, chain, features, aspects]
 
     column_names = ['id', 'title', 'coordinates', 'address', 'rating', 'working_time',
                     'metro', 'stops', 'chain', 'features', 'aspects']
