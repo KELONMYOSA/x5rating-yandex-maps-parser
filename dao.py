@@ -14,12 +14,13 @@ client = clickhouse_connect.get_client(host=CLICKHOUSE_HOST, username=CLICKHOUSE
 
 def insert_place_data(place_data):
     metro = []
-    for metro_data in place_data['metro']:
-        metro.append({
-            'id': metro_data['id'],
-            'name': metro_data['name'],
-            'distanceValue': str(metro_data['distanceValue']),
-        })
+    if 'metro' in list(place_data.keys()):
+        for metro_data in place_data['metro']:
+            metro.append({
+                'id': metro_data['id'],
+                'name': metro_data['name'],
+                'distanceValue': str(metro_data['distanceValue']),
+            })
 
     stops = []
     for stops_data in place_data['stops']:
