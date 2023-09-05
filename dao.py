@@ -23,12 +23,13 @@ def insert_place_data(place_data):
             })
 
     stops = []
-    for stops_data in place_data['stops']:
-        stops.append({
-            'id': stops_data['id'],
-            'name': stops_data['name'],
-            'distanceValue': str(stops_data['distanceValue']),
-        })
+    if 'stops' in list(place_data.keys()):
+        for stops_data in place_data['stops']:
+            stops.append({
+                'id': stops_data['id'],
+                'name': stops_data['name'],
+                'distanceValue': str(stops_data['distanceValue']),
+            })
 
     chain = {}
     if 'chain' in list(place_data.keys()):
