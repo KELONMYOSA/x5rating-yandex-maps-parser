@@ -57,12 +57,9 @@ def insert_place_data(place_data):
     aspects = []
     if 'aspects' in list(place_data.keys()):
         for aspects_data in place_data['aspects']:
-            aspects_name = ""
-            if 'name' in list(aspects_data.keys()):
-                aspects_name = aspects_data['name']
             aspects.append({
                 'id': aspects_data['id'],
-                'name': aspects_name,
+                'text': aspects_data['text'],
                 'count': str(aspects_data['count']),
                 'positive': str(aspects_data['positive']),
                 'neutral': str(aspects_data['neutral']),
