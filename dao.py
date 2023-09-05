@@ -31,10 +31,13 @@ def insert_place_data(place_data):
 
     chain = {}
     if 'chain' in list(place_data.keys()):
+        chain_quantity = ""
+        if 'quantityInCity' in list(place_data['chain'].keys()):
+            chain_quantity = str(place_data['chain']['quantityInCity'])
         chain = {
             'id': place_data['chain']['id'],
             'name': place_data['chain']['name'],
-            'quantityInCity': str(place_data['chain']['quantityInCity']),
+            'quantityInCity': chain_quantity,
         }
 
     features = []
